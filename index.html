@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="description" content="مواقع مخصصة لمتاجر إنستغرام: طلبات كاملة ومنظّمة بدل طوفان الرسائل.">
+<meta property="og:title" content="عبادة الحموي | مواقع لمتاجر إنستغرام">
+<meta property="og:description" content="ارتَحْ من طوفان الرسائل. احجز مكالمة عبر واتساب.">
+<meta property="og:image" content="https://دومينك/img/og.jpg">
+<meta property="og:type" content="website">
+
+<title>عبادة الحموي</title>
+<meta name="theme-color" content="#121212" />
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<style>
+  :root{
+    /* ==== قابل للتعديل ==== */
+    --accent: #FF5A1F;
+    --mustard: #D4A54A;
+    --bg: #121212;
+    --bg-alt: #1a1a1a;
+    --card: #1c1c1c;
+    --text: #e7e5e4;
+    --muted: #a8a29e;
+    --halftone: 1;                        /* 1 = مفعّل، 0 = معطّل */
+    --photo-filter: url(#duotone);        /* none = إيقاف تأثير الصورة */
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  html{ background: var(--bg); }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.8;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  @media (min-width: 768px){ body{ font-size: 18px; } }
+
+  h1,h2,h3,.font-display{
+    font-family: 'Readex Pro', system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0;
+  }
+
+  .bg-base{ background-color: var(--bg); }
+  .bg-alt{ background-color: var(--bg-alt); }
+  .bg-card{ background-color: var(--card); }
+  .text-bone{ color: var(--text); }
+  .text-muted{ color: var(--muted); }
+  .text-accent{ color: var(--accent); }
+  .text-mustard{ color: var(--mustard); }
+  .border-hair{ border-color: rgba(255,255,255,.10); }
+
+  .fill-accent{ fill: var(--accent); }
+  .fill-mustard{ fill: var(--mustard); }
+  .stroke-accent{ stroke: var(--accent); }
+  .stroke-mustard{ stroke: var(--mustard); }
+
+  /* ---------- أزرار ---------- */
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-weight: 600;
+    border-radius: .75rem;
+    padding: .85rem 1.5rem;
+    touch-action: manipulation;
+    transition: transform .18s var(--ease), background-color .2s ease, border-color .2s ease;
+    will-change: transform;
+  }
+  .btn:active{ transform: scale(.97); }
+  .btn-primary{
+    background: var(--accent);
+    color: #141414;
+  }
+
+  /* ---------- كشف العناصر ---------- */
+  .js [data-reveal]{
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity .5s var(--ease), transform .5s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+  .js [data-reveal].is-in{ opacity: 1; transform: none; }
+
+  /* ---------- كشف العناوين كلمة بكلمة ---------- */
+  .h-words .w{ display: inline-block; }
+  .js .h-words .w > span{
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(.5em);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+    transition-delay: calc(var(--i, 0) * 70ms + 80ms);
+  }
+  .js .h-words.in .w > span{ opacity: 1; transform: none; }
+
+  /* ---------- نصف الطباعة (halftone) ---------- */
+  .halftone{
+    background-image: radial-gradient(currentColor 1px, transparent 1.15px);
+    background-size: 7px 7px;
+    color: var(--accent);
+    opacity: calc(.5 * var(--halftone));
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 72%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 72%);
+  }
+  .halftone-block{
+    background-image: radial-gradient(currentColor 1px, transparent 1.15px);
+    background-size: 6px 6px;
+    color: #e7e5e4;
+    opacity: calc(.16 * var(--halftone));
+  }
+  .halftone-soft{
+    background-image: radial-gradient(currentColor 1px, transparent 1.15px);
+    background-size: 6px 6px;
+    color: #ffffff;
+    opacity: calc(.26 * var(--halftone));
+    /* فراغ فوق الوجه (مركزه 50% أفقياً و44% عمودياً)، والنقاط تزداد نحو الحواف */
+    -webkit-mask-image: radial-gradient(ellipse 34% 40% at 50% 44%, transparent 55%, #000 100%);
+    mask-image: radial-gradient(ellipse 34% 40% at 50% 44%, transparent 55%, #000 100%);
+  }
+
+  /* ---------- قصّة الهيرو ---------- */
+  .bubble{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bubbleStory 3.6s var(--ease) both;
+  }
+  .bubble:nth-of-type(3n){ animation-delay: .10s; }
+  .bubble:nth-of-type(3n+1){ animation-delay: .20s; }
+
+  @keyframes bubbleStory{
+    0%   { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(calc(var(--s) * .55)); }
+    9%   { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s)); }
+    48%  { opacity: 1; transform: translate(calc(var(--x) * 1.08), calc(var(--y) * 1.08)) rotate(calc(var(--r) * -1)) scale(var(--s)); }
+    76%  { opacity: 0; transform: translate(0px, 130px) rotate(0deg) scale(calc(var(--s) * .3)); }
+    100% { opacity: 0; transform: translate(0px, 130px) rotate(0deg) scale(calc(var(--s) * .3)); }
+  }
+
+  .order-inner{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: orderIn 3.6s var(--ease) both;
+  }
+  @keyframes orderIn{
+    0%, 70% { opacity: 0; transform: scale(.86); }
+    88%     { opacity: 1; transform: scale(1); }
+    100%    { opacity: 1; transform: scale(1); }
+  }
+
+  /* ---------- زخرفة زر واتساب ---------- */
+  .js .cta-dots{
+    opacity: 0;
+    transform: scale(.55);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity .6s var(--ease) .1s, transform .6s var(--ease) .1s;
+  }
+  .js .is-on .cta-dots{ opacity: .85; transform: scale(1); }
+  .js .cta-stroke{
+    stroke-dasharray: 360;
+    stroke-dashoffset: 360;
+    transition: stroke-dashoffset .9s var(--ease) .15s;
+  }
+  .js .is-on .cta-stroke{ stroke-dashoffset: 0; }
+
+  /* ---------- إطار ورقي ممزّق ---------- */
+  .photo-torn{
+    clip-path: polygon(
+      2% 1%, 14% 0%, 27% 2%, 40% 0%, 53% 1.5%, 66% 0%, 79% 2%, 92% 0%,
+      99% 2%, 100% 13%, 98% 26%, 100% 39%, 98.5% 52%, 100% 65%, 98% 78%,
+      100% 90%, 98% 99%, 86% 100%, 73% 98%, 60% 100%, 47% 98%, 34% 100%,
+      21% 98%, 8% 100%, 1% 98%, 0% 86%, 2% 73%, 0% 60%, 1.5% 47%, 0% 34%,
+      2% 21%, 0% 9%
+    );
+  }
+  .torn-edge{
+    clip-path: polygon(
+      0% 0%, 100% .6%, 99.4% 14%, 100% 30%, 99.5% 48%, 100% 66%,
+      99.6% 84%, 100% 100%, 0% 99.4%, .6% 82%, 0% 64%, .5% 46%,
+      0% 28%, .4% 12%
+    );
+  }
+
+  /* ---------- شارة واتساب: حركة مستمرة بروح الكولاج ---------- */
+  /* كل الحركة داخل حدود الزر */
+  .btn-wa{ position: relative; overflow: hidden; isolation: isolate; gap: .7rem; }
+  /* طبقة نقاط طباعة داكنة تنزلق ببطء على سطح الزر */
+  .btn-wa::before{
+    content: ""; position: absolute; inset: -12px; z-index: -1;
+    background-image: radial-gradient(#141414 1px, transparent 1.25px);
+    background-size: 6px 6px; opacity: .13;
+    animation: waDots 2.4s linear infinite paused;
+  }
+  /* قصاصة داكنة صغيرة بحواف ممزقة تحمل الأيقونة */
+  .wa-badge{ position: relative; flex: none; width: 1.75rem; height: 1.75rem; pointer-events: none; }
+  .wa-scrap{
+    position: absolute; inset: 0; background: #141414;
+    clip-path: polygon(6% 10%,30% 2%,55% 8%,80% 0%,96% 14%,100% 40%,94% 64%,100% 88%,76% 98%,50% 92%,24% 100%,4% 86%,0% 60%,6% 36%);
+    animation: waScrap 3s ease-in-out infinite alternate paused;
+  }
+  .wa-dots{ display: none; }
+  .wa-icon{
+    position: absolute; inset: 0; margin: auto;
+    width: 1rem; height: 1rem; color: var(--accent);
+  }
+  /* خط يدوي داكن يُرسم تحت النص باتجاه القراءة، يبقى لحظة ثم يُمحى */
+  .btn-wa::after{
+    content: ""; position: absolute; z-index: -1;
+    inset-inline: 1.1rem; bottom: .32rem; height: 6px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 6' preserveAspectRatio='none'%3E%3Cpath d='M2 4 C 30 1.5, 55 5.5, 85 3 S 140 1.5, 165 4 S 190 3, 198 2.5' fill='none' stroke='%23141414' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+    opacity: .55;
+    clip-path: inset(0 0 0 100%);
+    animation: waDraw 5s cubic-bezier(.65,0,.35,1) infinite paused;
+  }
+  @keyframes waDraw{
+    0%       { clip-path: inset(0 0 0 100%); }  /* يبدأ من اليمين */
+    28%,62%  { clip-path: inset(0 0 0 0); }
+    85%,100% { clip-path: inset(0 100% 0 0); }  /* يُمحى نحو اليسار */
+  }
+  .wa-ring{ display: none; }
+  @keyframes waScrap{ from{ transform: rotate(-6deg); } to{ transform: rotate(3deg); } }
+  @keyframes waDots{ to{ transform: translate(-6px, 6px); } } /* باتجاه القراءة */
+  @keyframes waIcon{ from{ transform: rotate(0); } to{ transform: rotate(-10deg) scale(1.08); } }
+  .btn-wa.is-live::before,
+  .btn-wa.is-live::after,
+  .btn-wa.is-live .wa-scrap{ animation-play-state: running; }
+
+  /* ---------- تقليل الحركة ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+      transition-delay: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+    .bubble{ animation: none !important; opacity: 0 !important; }
+    .order-inner{ animation: none !important; opacity: 1 !important; transform: none !important; }
+    .cta-stroke{ stroke-dashoffset: 0 !important; }
+    .cta-dots{ opacity: .85 !important; transform: none !important; }
+    .btn-wa::before,.btn-wa::after,.wa-scrap,.wa-dots,.wa-icon{ animation: none !important; }
+    .btn-wa::after{ clip-path: none; }
+    .wa-scrap{ transform: rotate(-5deg); }
+    .wa-ring path{ animation: none !important; stroke-dashoffset: 0 !important; }
+  }
+</style>
+</head>
+
+<body class="bg-base text-bone" x-data="{}">
+
+<!-- ================= فلتر الدوتون للصورة ================= -->
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <filter id="duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0" result="g" />
+    <feComponentTransfer in="g" result="d">
+      <feFuncR type="table" tableValues="0.0706 1" />
+      <feFuncG type="table" tableValues="0.0706 0.3529" />
+      <feFuncB type="table" tableValues="0.0706 0.1216" />
+    </feComponentTransfer>
+  </filter>
+  <symbol id="wa-glyph" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </symbol>
+</svg>
+
+<main>
+
+  <!-- =========================================================
+       1. الهيرو
+  ========================================================== -->
+  <section class="relative overflow-hidden">
+    <div class="mx-auto max-w-5xl px-5 pb-14 pt-8 sm:px-8 sm:pb-20 sm:pt-12">
+      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+
+        <!-- المشهد الورقي -->
+        <div class="order-1 lg:order-2">
+          <div class="scene relative mx-auto flex aspect-square w-full max-w-[400px] items-center justify-center">
+
+            <!-- خلفية الكولاج -->
+            <svg class="absolute inset-0 z-0 h-full w-full" viewBox="-200 -200 400 400" aria-hidden="true" focusable="false">
+              <g transform="rotate(-2)">
+                <polygon fill="#202020" points="-186,-176 -62,-184 46,-176 152,-182 188,-152 180,-42 186,58 178,150 62,184 -48,176 -148,182 -186,152 -178,42 -184,-58" />
+              </g>
+              <g transform="rotate(-7)">
+                <polygon class="fill-accent" opacity=".92" points="-178,-150 -118,-158 -68,-146 -60,-120 -70,-96 -62,-70 -76,-52 -118,-58 -158,-50 -178,-70 -170,-100 -180,-124" />
+              </g>
+              <g transform="rotate(6)">
+                <polygon class="fill-mustard" opacity=".9" points="118,58 176,50 190,90 182,130 186,160 148,174 116,166 126,132 114,96" />
+              </g>
+              <g transform="rotate(9)">
+                <polygon class="fill-accent" opacity=".85" points="116,-124 166,-132 178,-98 170,-70 176,-48 138,-42 116,-62 124,-92" />
+              </g>
+              <g transform="rotate(-4)">
+                <polygon fill="#2a2a2a" points="-192,-24 -140,-32 -110,-12 -118,20 -106,56 -140,66 -188,58 -178,18" />
+              </g>
+              <path d="M-176 130 C -140 112, -102 152, -58 128" fill="none" class="stroke-accent" stroke-width="3.5" stroke-linecap="round" opacity=".85" />
+              <path d="M92 152 C 128 140, 166 158, 186 134" fill="none" class="stroke-mustard" stroke-width="3" stroke-linecap="round" opacity=".75" />
+            </svg>
+
+            <!-- حقول النقاط -->
+            <div class="halftone pointer-events-none absolute end-0 top-4 z-0 h-24 w-24"></div>
+            <div class="halftone pointer-events-none absolute bottom-6 start-0 z-0 h-28 w-28"></div>
+
+            <!-- الهاتف -->
+            <div class="relative z-10 w-[40%] max-w-[176px]">
+              <div class="-rotate-2 rounded-[1.8rem] border border-white/15 bg-[#0b0b0b] p-[6px] shadow-[0_28px_60px_-24px_rgba(0,0,0,.95)]">
+                <div class="relative overflow-hidden rounded-[1.45rem] bg-[#0e0e0e]" style="aspect-ratio: 9 / 19;">
+                  <!-- سكتش عام لحساب متجر على إنستغرام، مرسوم بالكود -->
+                  <svg class="h-full w-full" viewBox="0 0 180 380" role="img" aria-label="رسم تخطيطي لصفحة متجر على إنستغرام"
+                       fill="none" stroke="#e7e5e4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- الشريط العلوي: اسم الحساب -->
+                    <path d="M104 22 C 120 21, 140 23, 160 22" stroke-width="2.4" />
+                    <path d="M22 22 h2 M30 22 h2 M38 22 h2" stroke-width="2.6" opacity=".6" />
+
+                    <!-- الصورة الشخصية (يمين) مع حلقة القصص -->
+                    <defs>
+                      <linearGradient id="igRing" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0" stop-color="#FEDA75" />
+                        <stop offset=".3" stop-color="#FA7E1E" />
+                        <stop offset=".6" stop-color="#D62976" />
+                        <stop offset=".85" stop-color="#962FBF" />
+                        <stop offset="1" stop-color="#4F5BD5" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="146" cy="62" r="23" stroke="url(#igRing)" stroke-width="2.6" />
+                    <path d="M131 64 C 134 52, 156 50, 161 61 C 160 72, 136 76, 131 64 Z" fill="#2a2a2a" stroke-width="1.2" />
+                    <path d="M136 61 l9 -4 9 3" stroke="#3ad0d8" stroke-width="2" />
+
+                    <!-- الإحصاءات: منشورات / متابعون / يتابع -->
+                    <path d="M92 55 h16 M60 55 h18 M24 55 h10" stroke-width="2.6" />
+                    <path d="M88 67 h24 M56 67 h26 M20 67 h18" opacity=".45" />
+
+                    <!-- الاسم والوصف -->
+                    <path d="M118 104 C 135 103, 150 105, 162 104" stroke-width="2.2" />
+                    <path d="M58 118 C 95 117, 130 119, 162 118" opacity=".55" />
+                    <path d="M40 129 C 85 128, 125 130, 162 129" opacity=".55" />
+                    <path d="M76 140 C 105 139, 135 141, 162 140" opacity=".55" />
+                    <path d="M96 151 C 120 150, 142 152, 162 151" stroke="#E0F1FF" opacity=".9" />
+
+                    <!-- زر المتابعة وزر المراسلة -->
+                    <rect x="94" y="164" width="68" height="17" rx="5" fill="#4A5DF9" stroke="none" />
+                    <path d="M118 172.5 h20" stroke="#ffffff" stroke-width="2" />
+                    <rect x="38" y="164" width="50" height="17" rx="5" fill="#262626" stroke="none" />
+                    <path d="M54 172.5 h18" opacity=".7" />
+                    <rect x="18" y="164" width="15" height="17" rx="5" fill="#262626" stroke="none" />
+
+                    <!-- القصص المميزة -->
+                    <g stroke="#3a3a3a" stroke-width="2">
+                      <circle cx="150" cy="210" r="11" fill="#3b2f2a" /><circle cx="118" cy="210" r="11" fill="#1f3b44" />
+                      <circle cx="86" cy="210" r="11" fill="#e8e4f5" /><circle cx="54" cy="210" r="11" fill="#5a2a32" />
+                      <circle cx="22" cy="210" r="11" fill="#2a2a2a" opacity=".6" />
+                    </g>
+                    <path d="M144 230 h12 M112 230 h12 M80 230 h12 M48 230 h12" opacity=".45" />
+
+                    <!-- التبويبات -->
+                    <path d="M14 246 C 60 245, 120 247, 166 246" opacity=".35" />
+                    <path d="M136 246 h26" stroke-width="2.6" />
+
+                    <!-- شبكة المنشورات والريلز -->
+                    <g stroke-width="1.3">
+                      <rect x="121" y="252" width="46" height="58" rx="2" fill="#262626" />
+                      <rect x="67"  y="252" width="50" height="58" rx="2" fill="#7a1f2b" stroke="none" />
+                      <rect x="13"  y="252" width="50" height="58" rx="2" fill="#262626" />
+                      <rect x="121" y="314" width="46" height="58" rx="2" fill="#5b6470" stroke="none" />
+                      <rect x="67"  y="314" width="50" height="58" rx="2" fill="#262626" />
+                      <rect x="13"  y="314" width="50" height="58" rx="2" fill="#262626" />
+                    </g>
+                    <!-- رموز داخل المنشورات: منتج، تشغيل ريل، خاتم -->
+                    <path d="M134 290 l10 -16 10 16 Z" opacity=".7" />
+                    <path d="M86 272 v18 l14 -9 Z" fill="#141414" stroke="#141414" />
+                    <circle cx="38" cy="282" r="9" opacity=".7" /><path d="M34 272 l4 -5 4 5" opacity=".7" />
+                    <path d="M136 336 v18 l14 -9 Z" fill="#141414" stroke="#141414" />
+                    <path d="M80 330 h24 v24 h-24 Z M80 338 h24" opacity=".7" />
+                    <path d="M26 352 C 32 334, 44 334, 50 352" opacity=".7" />
+                  </svg>
+                  <div class="halftone-block pointer-events-none absolute inset-0"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- طبقة القصة: الفقاعات ← بطاقة الطلب -->
+            <svg class="pointer-events-none absolute inset-0 z-20 h-full w-full" viewBox="-200 -200 400 400" aria-hidden="true" focusable="false">
+              <defs>
+                <g id="bub">
+                  <rect x="-32" y="-13" width="64" height="26" rx="13" fill="#1c1c1c" stroke="rgba(231,229,228,.18)" stroke-width="1.5" />
+                  <rect x="-22" y="-6" width="28" height="3.5" rx="1.75" fill="rgba(231,229,228,.55)" />
+                  <rect x="-22" y="1.5" width="16" height="3.5" rx="1.75" fill="rgba(231,229,228,.3)" />
+                </g>
+              </defs>
+
+              <use href="#bub" class="bubble" style="--x:-150px;--y:-118px;--r:-6deg;--s:.76" />
+              <use href="#bub" class="bubble" style="--x:-116px;--y:-34px;--r:5deg;--s:.62" />
+              <use href="#bub" class="bubble" style="--x:-142px;--y:62px;--r:-4deg;--s:.72" />
+              <use href="#bub" class="bubble" style="--x:-126px;--y:132px;--r:7deg;--s:.6" />
+              <use href="#bub" class="bubble" style="--x:-92px;--y:-158px;--r:3deg;--s:.58" />
+              <use href="#bub" class="bubble" style="--x:-34px;--y:-172px;--r:-5deg;--s:.66" />
+              <use href="#bub" class="bubble" style="--x:44px;--y:-168px;--r:6deg;--s:.56" />
+              <use href="#bub" class="bubble" style="--x:112px;--y:-138px;--r:-7deg;--s:.7" />
+              <use href="#bub" class="bubble" style="--x:156px;--y:-66px;--r:4deg;--s:.62" />
+              <use href="#bub" class="bubble" style="--x:162px;--y:26px;--r:-3deg;--s:.68" />
+              <use href="#bub" class="bubble" style="--x:140px;--y:106px;--r:7deg;--s:.58" />
+              <use href="#bub" class="bubble" style="--x:96px;--y:160px;--r:-5deg;--s:.64" />
+              <use href="#bub" class="bubble" style="--x:18px;--y:176px;--r:4deg;--s:.6" />
+              <use href="#bub" class="bubble" style="--x:-58px;--y:168px;--r:-6deg;--s:.66" />
+
+              <g transform="translate(0 130)">
+                <g class="order-inner">
+                  <rect x="-84" y="-36" width="168" height="72" rx="14" fill="#1c1c1c" stroke="rgba(255,90,31,.5)" stroke-width="1.5" />
+                  <rect x="-68" y="-21" width="58" height="7" rx="3.5" fill="rgba(231,229,228,.75)" />
+                  <rect x="-68" y="-5" width="34" height="6" rx="3" fill="rgba(255,90,31,.9)" />
+                  <rect x="-68" y="11" width="46" height="5" rx="2.5" fill="rgba(231,229,228,.32)" />
+                  <circle cx="52" cy="0" r="16" fill="rgba(255,90,31,.16)" stroke="rgba(255,90,31,.55)" />
+                  <path d="M45 0 l5 5 9 -10" fill="none" class="stroke-accent" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+              </g>
+            </svg>
+
+          </div>
+        </div>
+
+        <!-- النص -->
+        <div class="order-2 text-start lg:order-1">
+          <h1 class="h-words text-[1.9rem] sm:text-[2.35rem] lg:text-[2.7rem]"
+              x-data="{ v: false }"
+              x-intersect.once="v = true"
+              :class="v ? 'in' : ''">
+            <span class="w"><span style="--i:0">ارتَحْ</span></span>
+            <span class="w"><span style="--i:1">من</span></span>
+            <span class="w"><span style="--i:2">طوفان</span></span>
+            <span class="w"><span style="--i:3"><span class="text-accent">الرسائل</span>.</span></span>
+          </h1>
+
+          <p class="mt-5 max-w-[46ch] text-muted"
+             data-reveal style="--d:160ms"
+             x-intersect.once="$el.classList.add('is-in')">
+            لنبنِ لمتجرك على إنستغرام موقعاً على مقاسه، يعرض منتجاتك وأسعارك، ويجيب عن أسئلة عملائك، ويستقبل طلباتهم كاملةً ومنظّمة.
+          </p>
+
+          <!-- الزر الأساسي + زخرفة -->
+          <div class="relative mt-8 inline-block"
+               x-data="{ on: false }"
+               x-intersect.once="on = true"
+               :class="on ? 'is-on' : ''">
+
+            <svg class="pointer-events-none absolute -inset-x-8 -inset-y-6 z-0 h-[calc(100%+3rem)] w-[calc(100%+4rem)]"
+                 viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="ctaDots" width="6" height="6" patternUnits="userSpaceOnUse">
+                  <circle cx="1.4" cy="1.4" r="1.4" class="fill-accent" />
+                </pattern>
+              </defs>
+              <rect class="cta-dots" x="0" y="58" width="72" height="42" fill="url(#ctaDots)" />
+              <rect class="cta-dots" x="228" y="0" width="72" height="42" fill="url(#ctaDots)" />
+              <path class="cta-stroke" d="M8 78 C 60 94, 200 96, 292 62" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+
+            <a href="https://wa.me/963934145358?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%B9%D8%A8%D8%A7%D8%AF%D8%A9%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D9%85%D9%83%D8%A7%D9%84%D9%85%D8%A9%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20%D9%84%D9%85%D8%AA%D8%AC%D8%B1%D9%8A.%0A%D8%B1%D8%A7%D8%A8%D8%B7%20%D8%B5%D9%81%D8%AD%D8%AA%D9%8A%20%D8%B9%D9%84%D9%89%20%D8%A5%D9%86%D8%B3%D8%AA%D8%BA%D8%B1%D8%A7%D9%85%3A%0A%D8%A7%D9%84%D9%88%D9%82%D8%AA%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%20%D9%84%D9%8A%3A"
+               target="_blank" rel="noopener"
+               class="btn btn-primary btn-wa z-10"
+               x-data
+               x-intersect:enter="$el.classList.add('is-live')"
+               x-intersect:leave="$el.classList.remove('is-live')">
+              احجز مكالمة عبر واتساب
+              <span class="wa-badge" aria-hidden="true">
+                <span class="wa-scrap"><span class="wa-dots"></span></span>
+                <svg class="wa-icon"><use href="#wa-glyph"/></svg>
+                <svg class="wa-ring" viewBox="0 0 50 50"><path pathLength="140" d="M40 9 C 30 2, 10 4, 6 20 C 2 36, 16 47, 30 45 C 44 43, 48 28, 42 16 C 39 11, 33 8, 28 9"/></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2. دراسة حالة
+  ========================================================== -->
+  <section class="bg-alt py-16 sm:py-24">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+
+      <h2 class="h-words max-w-3xl text-[1.35rem] sm:text-[1.75rem]"
+          x-data="{ v: false }"
+          x-intersect.once="v = true"
+          :class="v ? 'in' : ''">
+        <span class="w"><span style="--i:0">متجر</span></span>
+        <span class="w"><span style="--i:1">إكسسوارات</span></span>
+        <span class="w"><span style="--i:2">على</span></span>
+        <span class="w"><span style="--i:3">إنستغرام:</span></span>
+        <span class="w"><span style="--i:4">من</span></span>
+        <span class="w"><span style="--i:5">فوضى</span></span>
+        <span class="w"><span style="--i:6">الرسائل</span></span>
+        <span class="w"><span style="--i:7">إلى</span></span>
+        <span class="w"><span style="--i:8">طلبات</span></span>
+        <span class="w"><span style="--i:9">مرتبة</span></span>
+      </h2>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-3 sm:gap-5">
+
+        <div class="rounded-xl border border-hair bg-card p-6 shadow-[0_18px_40px_-34px_rgba(0,0,0,.95)]"
+             data-reveal style="--d:0ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="mb-3 flex items-center gap-2">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span>
+            <span class="font-display text-[.95rem] text-bone">المشكلة:</span>
+          </div>
+          <p class="text-[.95rem] text-muted">كل شيء كان يصل عبر واتساب: الطلبات، والسؤال عن الأسعار، والاستفسارات. وكثير من الزبائن لا يرسلون معلومات الطلب كاملة، ثم يختفون أو يتأخر البيع.</p>
+        </div>
+
+        <div class="rounded-xl border border-hair bg-card p-6 shadow-[0_18px_40px_-34px_rgba(0,0,0,.95)]"
+             data-reveal style="--d:80ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="mb-3 flex items-center gap-2">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span>
+            <span class="font-display text-[.95rem] text-bone">الحل:</span>
+          </div>
+          <p class="text-[.95rem] text-muted">موقع مخصص تُعرض فيه المنتجات والأسعار بوضوح، ومستودع مرتبط بالمتجر سهل الإدارة. ويصل كل طلب إلى صاحب المتجر كاملاً ومرتباً.</p>
+        </div>
+
+        <div class="rounded-xl border border-hair bg-card p-6 shadow-[0_18px_40px_-34px_rgba(0,0,0,.95)]"
+             data-reveal style="--d:160ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="mb-3 flex items-center gap-2">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span>
+            <span class="font-display text-[.95rem] text-bone">النتيجة:</span>
+          </div>
+          <p class="text-[.95rem] text-muted">وفّر صاحب المتجر ساعات كان يقضيها في الرد على زبائن غير جادين، وصارت الطلبات تصله كاملة ومؤرشفة، ويحيل أغلب الأسئلة إلى الموقع.</p>
+        </div>
+
+      </div>
+
+      <!-- لقطات الشاشة -->
+      <div class="-mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0">
+
+        <div class="w-[64%] shrink-0 snap-center sm:mt-0 sm:w-auto"
+             data-reveal style="--d:0ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="rounded-[1.7rem] border border-white/10 bg-[#0b0b0b] p-[5px] shadow-[0_24px_50px_-34px_rgba(0,0,0,.95)]">
+            <img src="img/case-1.webp" alt="لقطة من متجر إكسسوارات" width="540" height="1140"
+                 loading="lazy" decoding="async"
+                 class="block h-auto w-full rounded-[1.45rem]" />
+          </div>
+        </div>
+
+        <div class="w-[64%] shrink-0 snap-center sm:mt-10 sm:w-auto"
+             data-reveal style="--d:80ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="rounded-[1.7rem] border border-white/10 bg-[#0b0b0b] p-[5px] shadow-[0_24px_50px_-34px_rgba(0,0,0,.95)]">
+            <img src="img/case-2.webp" alt="لقطة من متجر إكسسوارات" width="540" height="1140"
+                 loading="lazy" decoding="async"
+                 class="block h-auto w-full rounded-[1.45rem]" />
+          </div>
+        </div>
+
+        <div class="w-[64%] shrink-0 snap-center sm:mt-5 sm:w-auto"
+             data-reveal style="--d:160ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="rounded-[1.7rem] border border-white/10 bg-[#0b0b0b] p-[5px] shadow-[0_24px_50px_-34px_rgba(0,0,0,.95)]">
+            <img src="img/case-3.webp" alt="لقطة من متجر إكسسوارات" width="540" height="1140"
+                 loading="lazy" decoding="async"
+                 class="block h-auto w-full rounded-[1.45rem]" />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-8" data-reveal style="--d:120ms" x-intersect.once="$el.classList.add('is-in')">
+        <a href="https://syriashop0.com" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 text-[.95rem] text-bone underline decoration-white/25 underline-offset-4 transition-colors duration-200">
+          Syria Shop0
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l-5 6 5 6" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. سطر الترقية
+  ========================================================== -->
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <p class="border-s-2 border-[var(--mustard)] ps-5 text-[1.02rem] text-muted"
+         data-reveal style="--d:0ms" x-intersect.once="$el.classList.add('is-in')">
+        ولمن يريد المزيد: أتمتة متقدمة وإدارة كاملة لنظامك.
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. من أنا
+  ========================================================== -->
+  <section class="bg-alt py-16 sm:py-24">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <div class="grid gap-10 sm:grid-cols-[minmax(0,1fr)_240px] sm:items-start sm:gap-14">
+
+        <div>
+          <h2 class="h-words text-[1.6rem] sm:text-[2rem]"
+              x-data="{ v: false }"
+              x-intersect.once="v = true"
+              :class="v ? 'in' : ''">
+            <span class="w"><span style="--i:0">من</span></span>
+            <span class="w"><span style="--i:1">أنا؟...</span></span>
+          </h2>
+
+          <p class="mt-5 text-muted"
+             data-reveal style="--d:80ms" x-intersect.once="$el.classList.add('is-in')">
+            أنا عبادة الحموي، مبرمج من دمشق. أعمل في الدعم التقني والشبكات منذ أكثر من أربع سنوات، وأبني مواقع مخصصة للمتاجر على منصات التواصل.
+          </p>
+
+          <p class="mt-4 text-muted"
+             data-reveal style="--d:160ms" x-intersect.once="$el.classList.add('is-in')">
+            لا أسلّم الموقع وأختفي. ما يحتاجه متجرك اليوم ليس ما سيحتاجه بعد سنة، ولهذا أبقى معك، ونطوّر الموقع معاً كلما كبر متجرك.
+          </p>
+        </div>
+
+        <div class="mx-auto w-[210px] sm:mx-0 sm:w-full sm:max-w-[240px]"
+             data-reveal style="--d:120ms" x-intersect.once="$el.classList.add('is-in')">
+          <div class="relative">
+            <div class="photo-torn bg-[var(--accent)] p-[5px]">
+              <img src="img/me.webp" alt="عبادة الحموي" width="480" height="480"
+                   loading="lazy" decoding="async"
+                   class="block aspect-square w-full object-cover"
+                   style="filter: var(--photo-filter);" />
+            </div>
+            <div class="halftone-soft pointer-events-none absolute inset-0"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. الدعوة الأخيرة
+  ========================================================== -->
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <div class="rounded-2xl border border-hair bg-card px-6 py-12 text-start shadow-[0_30px_70px_-60px_rgba(0,0,0,1)] sm:px-12 sm:py-16">
+
+        <h2 class="h-words max-w-2xl text-[1.5rem] sm:text-[1.95rem]"
+            x-data="{ v: false }"
+            x-intersect.once="v = true"
+            :class="v ? 'in' : ''">
+          <span class="w"><span style="--i:0">عندك</span></span>
+          <span class="w"><span style="--i:1">متجر</span></span>
+          <span class="w"><span style="--i:2">على</span></span>
+          <span class="w"><span style="--i:3">إنستغرام؟</span></span>
+          <span class="w"><span style="--i:4">لنتحدث</span></span>
+          <span class="w"><span style="--i:5">عنه.</span></span>
+        </h2>
+
+        <p class="mt-4 max-w-[52ch] text-muted"
+           data-reveal style="--d:120ms" x-intersect.once="$el.classList.add('is-in')">
+          احجز مكالمة قصيرة نتعرّف فيها على متجرك وطريقة عملك، ونرى ما يناسبك.
+        </p>
+
+        <div class="mt-8" data-reveal style="--d:200ms" x-intersect.once="$el.classList.add('is-in')">
+          <a href="https://wa.me/963934145358?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%B9%D8%A8%D8%A7%D8%AF%D8%A9%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D9%85%D9%83%D8%A7%D9%84%D9%85%D8%A9%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20%D9%84%D9%85%D8%AA%D8%AC%D8%B1%D9%8A.%0A%D8%B1%D8%A7%D8%A8%D8%B7%20%D8%B5%D9%81%D8%AD%D8%AA%D9%8A%20%D8%B9%D9%84%D9%89%20%D8%A5%D9%86%D8%B3%D8%AA%D8%BA%D8%B1%D8%A7%D9%85%3A%0A%D8%A7%D9%84%D9%88%D9%82%D8%AA%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%20%D9%84%D9%8A%3A"
+             target="_blank" rel="noopener"
+             class="btn btn-primary btn-wa"
+             x-data
+             x-intersect:enter="$el.classList.add('is-live')"
+             x-intersect:leave="$el.classList.remove('is-live')">
+            احجز مكالمة عبر واتساب
+            <span class="wa-badge" aria-hidden="true">
+              <span class="wa-scrap"><span class="wa-dots"></span></span>
+              <svg class="wa-icon"><use href="#wa-glyph"/></svg>
+              <svg class="wa-ring" viewBox="0 0 50 50"><path pathLength="140" d="M40 9 C 30 2, 10 4, 6 20 C 2 36, 16 47, 30 45 C 44 43, 48 28, 42 16 C 39 11, 33 8, 28 9"/></svg>
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     التذييل
+========================================================== -->
+<footer class="border-t border-hair">
+  <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-5 px-5 py-8 sm:flex-row sm:px-8">
+    <p class="text-[.92rem] text-muted">عبادة الحموي</p>
+
+    <div class="flex items-center gap-2">
+      <a href="https://www.facebook.com/alhamwiobada" target="_blank" rel="noopener" aria-label="فيسبوك"
+         class="flex h-10 w-10 items-center justify-center rounded-xl border border-hair text-muted transition-transform duration-200 active:scale-95"
+         style="touch-action: manipulation;">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.87.25-1.46 1.5-1.46h1.6V4.46A21 21 0 0 0 14.3 4.3c-2.3 0-3.8 1.4-3.8 3.95v2.25H7.9v3h2.6V21z" />
+        </svg>
+      </a>
+
+      <a href="https://www.linkedin.com/in/obada-al-hamwi-074b61284" target="_blank" rel="noopener" aria-label="لينكدإن"
+         class="flex h-10 w-10 items-center justify-center rounded-xl border border-hair text-muted transition-transform duration-200 active:scale-95"
+         style="touch-action: manipulation;">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.6c0-1.34-.02-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21H9z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- احتياط: إن فشل Alpine، أظهر كل المحتوى -->
+<script>
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      if (!window.Alpine) {
+        document.documentElement.classList.remove('js');
+      }
+    }, 1500);
+  });
+</script>
+
+</body>
+</html>
